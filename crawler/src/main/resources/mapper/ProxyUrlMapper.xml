@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.crawler.persistence.mapper.ProxyUrlMapper">
+    <select id="queryTotalNumber" resultType="Integer">
+        select count(host) from `ip_pool`;
+    </select>
+
+    <select id="queryProxyUrlList"
+            parameterType="com.crawler.pojo.page.Page"
+            resultType="com.crawler.pojo.proxy.ProxyUrl">
+        select host, port, count, id
+            from ip_pool limit #{current}, #{increment};
+    </select>
+
+    <select id="queryProxyUrlListByRandom" resultType="com.crawler.pojo.proxy.ProxyUrl">
+        select host, port, count, id
+            from ip_pool order by rand() limit 10;
+    </select>
+
+    <select id="findOne"
+            parameterType="com.crawler.pojo.proxy.ProxyUrl"
+            resultType="com.crawler.pojo.proxy.ProxyUrl">
+        select * from ip_pool
+        where
+            host = #{host}
+        and
+            port = #{port}
+    </select>
+
+    <insert id="addProxyUrl" parameterType="com.crawler.pojo.proxy.ProxyUrl">
+        <selectKey keyProperty="id" keyColumn="id" order="BEFORE" resultType="int">
+            select last_insert_id();
+        </selectKey>
+        insert into
+            ip_pool(host,       port)
+            values (#{host},    #{port})
+    </insert>
+
+    <update id="updateProxyUrl" parameterType="com.crawler.pojo.proxy.ProxyUrl">
+        update
+            ip_pool
+        set
+            host  = #{host},
+            port  = #{port},
+            count = #{count}
+        where
+            id = #{id};
+    </update>
+
+    <delete id="deleteProxyUrl" parameterType="com.crawler.pojo.proxy.ProxyUrl">
+        delete from
+            ip_pool
+        where
+            id = #{id};
+    </delete>
+</mapper>

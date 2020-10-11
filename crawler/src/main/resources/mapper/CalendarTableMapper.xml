@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.crawler.persistence.mapper.CalendarMapper">
+    <insert id="saveCalendar" parameterType="com.crawler.pojo.stock.CalendarTable">
+        insert ignore
+            calendar    (id_cal,    year,       month,      day)
+            values      (#{id},     #{year},    #{month},   #{day})
+    </insert>
+
+    <select id="findById" parameterType="String" resultType="com.crawler.pojo.stock.CalendarTable">
+        select id_cal, year, month, day
+        from calendar
+        where id_cal = #{id};
+    </select>
+</mapper>

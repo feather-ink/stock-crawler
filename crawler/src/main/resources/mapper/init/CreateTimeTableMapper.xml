@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.crawler.persistence.mapper.init.create_database.CreateTimeTableMapper">
+
+    <update id="createDatabase">
+        create table timetable
+        (
+            `id_time` varchar(5) primary key comment '时间id',
+            `hour`    varchar(2) not null comment '小时',
+            `minute`  varchar(2) not null comment '分钟'
+        )engine=innodb default charset=utf8 comment='时间表'
+    </update>
+</mapper>

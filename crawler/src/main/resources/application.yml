@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/crawler?serverTimezone=UTC
+    username: root
+    password: 1110
+
+mybatis:
+  type-aliases-package: com.crawler.pojo
+  mapper-locations: classpath:mapper/*Mapper.xml, classpath*:/mapper/init/*Mapper.xml
+
+
+logging:
+  level:
+    root: info
+
+crawler:
+  init:
+    initLocalContext: true
+  proxyweb:
+    link: http://www.ip3366.net/?stype=1&page=
+  random:
+    initRandom: true
+
+
+

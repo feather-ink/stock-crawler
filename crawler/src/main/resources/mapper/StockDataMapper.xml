@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.crawler.persistence.mapper.StockDataMapper">
+    <insert id="saveStockData" parameterType="com.crawler.pojo.stock.StockData">
+        insert into
+            stock_data_temp  (code,    calendar,    time,    price,    average,    `change`,  `range`,    exchange,    turnover)
+            values           (#{code}, #{calendar}, #{time}, #{price}, #{average}, #{change}, #{range}, #{exchange}, #{turnover})
+    </insert>
+    
+    <update id="createTempTable">
+        create table if not exists stock_data_temp like stock_data;
+    </update>
+
+    <delete id="truncateTable">
+         truncate table stock_data_temp;
+    </delete>
+
+    <insert id="insertData">
+        insert into stock_data
+            select code, calendar, time, price, average, `change`, `range`, exchange, turnover
+            from stock_data_temp;
+    </insert>
+
+    <delete id="dropTemp">
+        drop table if exists stock_data_temp;
+    </delete>
+</mapper>
